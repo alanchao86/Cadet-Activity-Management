@@ -1,7 +1,5 @@
 # Cadet Activity Management
 
-Local development is supported via Docker only.
-
 ## Local Docker Setup
 
 ### Prerequisites
