@@ -16,5 +16,13 @@ FactoryBot.define do
     provider { 'google_oauth2' }
     unit_id { FactoryBot.create(:unit).id }
     admin_flag { true }
+
+    trait :local_auth do
+      provider { 'local' }
+      uid { nil }
+      username { "demo_#{SecureRandom.hex(4)}" }
+      password { 'DemoPass123!' }
+      password_confirmation { 'DemoPass123!' }
+    end
   end
 end
