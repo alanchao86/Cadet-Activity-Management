@@ -21,6 +21,39 @@
     </div>
     </div>
   </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :provider, "Login Type", class: "form-label" %>
+      <div class="select-outline">
+        <%= form.select :provider,
+            [["Google OAuth", "google_oauth2"], ["Local Username/Password", "local"]],
+            { selected: (@user.preloaded_google_auth? ? "google_oauth2" : @user.provider) },
+            { required: true, class: "select form-control", data: { mdb_select_init: true } } %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.label :username, "Username (local only)", class: "form-label" %>
+      <div data-mdb-input-init class="form-outline">
+        <%= form.text_field :username, class: "form-control", autocomplete: "username" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col">
+      <%= form.label :password, "Password (local only)", class: "form-label" %>
+      <div data-mdb-input-init class="form-outline">
+        <%= form.password_field :password, class: "form-control", autocomplete: "new-password" %>
+      </div>
+    </div>
+    <div class="col">
+      <%= form.label :password_confirmation, "Confirm Password", class: "form-label" %>
+      <div data-mdb-input-init class="form-outline">
+        <%= form.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
+      </div>
+    </div>
+  </div>
   
   <%= form.label :unit_id, "Outfit", class: "form-label" %>
   <div class="select-outline">
