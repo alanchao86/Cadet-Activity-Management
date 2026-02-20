@@ -5,6 +5,78 @@
 
 # Development
 
+## Docker Local Setup (Recommended)
+
+This project now supports one-command local startup with Docker.
+
+### Prerequisites
+
+- Docker Desktop (or Docker Engine + Docker Compose plugin)
+
+### Quick Start
+
+1. Create local env file:
+
+```bash
+cp .env.example .env
+```
+
+2. (Optional but recommended) fill in Google OAuth values in `.env`:
+
+```bash
+GOOGLE_CLIENT_ID=your_client_id
+GOOGLE_CLIENT_SECRET=your_client_secret
+```
+
+3. Start app + database:
+
+```bash
+docker compose up --build
+```
+
+4. Initialize database (first time only):
+
+```bash
+docker compose run --rm web bin/rails db:create db:migrate db:seed
+```
+
+5. Open:
+
+```text
+http://localhost:3000
+```
+
+The web container startup is intentionally kept fast and stable; DB setup is explicit via the command above.
+If you change source code, rebuild with `docker compose up --build`.
+
+### Useful Docker Commands
+
+```bash
+# Start in background
+docker compose up -d --build
+
+# Stop services
+docker compose down
+
+# Stop + remove database volume (full DB reset)
+docker compose down -v
+
+# Open Rails console in container
+docker compose exec web bin/rails console
+
+# Seed data manually (recommended once after first boot)
+docker compose exec web bin/rails db:seed
+
+# Run test suite in container
+docker compose exec web bundle exec rspec
+docker compose exec web bin/rails cucumber
+```
+
+### Notes
+
+- Without OAuth env vars, the app still boots but Google login will not work.
+- Local DB runs in Docker Postgres and is connected via `DATABASE_URL`.
+
 ## First Time Setup
 
 ### Cloning Repository
