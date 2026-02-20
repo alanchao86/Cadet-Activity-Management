@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   before_action :require_login
-  helper_method :current_user
+  helper_method :current_user, :local_auth_enabled?
 
   private
 
@@ -24,5 +24,11 @@ class ApplicationController < ActionController::Base
     return if logged_in?
 
     redirect_to home_path, alert: 'You must be logged in to access this section.'
+  end
+
+  def local_auth_enabled?
+    return ActiveModel::Type::Boolean.new.cast(ENV['ENABLE_LOCAL_AUTH']) if ENV.key?('ENABLE_LOCAL_AUTH')
+
+    !Rails.env.production?
   end
 end

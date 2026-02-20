@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Authentication
   get '/users/:id', to: 'users#show', as: 'user'
+  post '/login', to: 'sessions#login_local', as: 'login'
   get '/logout', to: 'sessions#logout', as: 'logout'
   get '/auth/google_oauth2/callback', to: 'sessions#omniauth'
   get '/training_activities/chart', to: 'training_activities#chart_data', as: 'chart_data'

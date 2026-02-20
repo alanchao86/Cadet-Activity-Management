@@ -16,25 +16,45 @@ module SessionHelper
   end
 
   def check_preloaded_database(auth)
-    u = User.find_by(email: auth['info']['email'])
+    u = User.find_by(email: auth.dig('info', 'email'))
     return unless u
-    raise 'email already associated with a uid??' if u.uid
+
+    return if u.local_auth?
+    raise 'email already associated with a uid??' if u.google_auth? && u.uid.present?
 
     u.uid = auth['uid']
-    u.provider = auth['provider']
+    u.provider = 'google_oauth2'
+    u.save! if u.changed?
     u
   end
 
   def create_new_user(auth)
-    names = auth['info']['name'].split
+    first_name, last_name = parsed_names(auth)
     User.create!(
       uid: auth['uid'], provider: auth['provider'],
-      email: auth['info']['email'],
-      first_name: names[0],
-      last_name: names[1..].join(' '),
+      email: auth.dig('info', 'email'),
+      first_name:,
+      last_name:,
       unit: Unit.find_by(name: 'Unassigned Outfit'),
-      profile_picture: auth['info']['image'],
+      profile_picture: auth.dig('info', 'image'),
       admin_flag: false
     )
+  end
+
+  private
+
+  def parsed_names(auth)
+    info = auth['info'] || {}
+    first_name = info['first_name'].to_s.strip
+    last_name = info['last_name'].to_s.strip
+    full_name_parts = info['name'].to_s.strip.split(/\s+/)
+
+    first_name = full_name_parts.first.to_s if first_name.blank?
+    last_name = full_name_parts[1..].join(' ').to_s if last_name.blank?
+
+    first_name = info['email'].to_s.split('@').first.to_s if first_name.blank?
+    last_name = 'N/A' if last_name.blank?
+
+    [first_name, last_name]
   end
 end

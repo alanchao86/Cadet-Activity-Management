@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_421_191_140) do
+ActiveRecord::Schema[7.1].define(version: 20_260_220_070_000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -116,6 +116,9 @@ ActiveRecord::Schema[7.1].define(version: 20_240_421_191_140) do
     t.string 'major'
     t.string 'minor'
     t.string 'unit_name'
+    t.string 'username'
+    t.string 'password_digest'
+    t.index 'lower((username)::text)', name: 'index_users_on_lower_username', unique: true, where: '(username IS NOT NULL)'
     t.index ['email'], name: 'index_users_on_email', unique: true
   end
 

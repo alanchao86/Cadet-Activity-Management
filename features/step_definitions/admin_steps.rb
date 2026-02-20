@@ -23,7 +23,7 @@ Given('I am an logged-in admin user with name {string}') do |name|
   user2 = User.find_or_create_by(email: 'bobsmith@tamu.edu') do |user|
     user.first_name = 'Bob'
     user.last_name = 'Smith'
-    user.provider = 'google_oauth2'
+    user.provider = 'preloaded_google'
     user.unit = outfit
     user.admin_flag = false
   end
