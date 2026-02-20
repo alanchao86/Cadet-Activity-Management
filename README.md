@@ -1,5 +1,15 @@
 # Cadet Activity Management
 
+Cadet Activity Management is a role-based workflow system for planning, reviewing, and approving cadet training activities. It centralizes activity submission, multi-stage review, and audit history in one application so teams can track decisions consistently and reduce manual coordination.
+
+## Key Features
+
+- Centralized activity planning and review in one system for cadet units.
+- Multi-stage approval workflow with revision, rejection, and cancellation paths.
+- Full audit history for each activity, including status changes and reviewer comments.
+- Dual login for local testing: username/password plus optional Google OAuth.
+- Seeded role-based demo accounts for end-to-end workflow validation.
+
 ## Local Docker Setup
 
 ### Prerequisites
