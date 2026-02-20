@@ -21,12 +21,16 @@ This project now supports one-command local startup with Docker.
 cp .env.example .env
 ```
 
-2. (Optional but recommended) fill in Google OAuth values in `.env`:
+2. Configure `.env` values:
 
 ```bash
+ENABLE_LOCAL_AUTH=true
 GOOGLE_CLIENT_ID=your_client_id
 GOOGLE_CLIENT_SECRET=your_client_secret
 ```
+
+`ENABLE_LOCAL_AUTH=true` enables username/password demo login (recommended for local testing).
+Google values are optional unless you want to test Google OAuth.
 
 3. Start app + database:
 
@@ -76,6 +80,21 @@ docker compose exec web bin/rails cucumber
 
 - Without OAuth env vars, the app still boots but Google login will not work.
 - Local DB runs in Docker Postgres and is connected via `DATABASE_URL`.
+- Local username/password auth defaults to enabled outside production unless `ENABLE_LOCAL_AUTH=false`.
+
+### Demo Test Accounts (Seeded)
+
+After `db:seed`, these local tester accounts are available:
+
+| Role | Username | Password | Purpose |
+| --- | --- | --- | --- |
+| Admin | `demo_admin` | `DemoPass123!` | Access Admin page, manage users, impersonate |
+| Submitter | `demo_submitter` | `DemoPass123!` | Create and edit training activities |
+| Minor Approver | `demo_minor` | `DemoPass123!` | Approve/reject at minor level |
+| Major Approver | `demo_major` | `DemoPass123!` | Approve/reject at major level |
+| CMDT Approver | `demo_cmdt` | `DemoPass123!` | Final approval/testing commandant flow |
+
+Security note: these credentials are for local/demo/test use only. Do not use in production.
 
 ## First Time Setup
 

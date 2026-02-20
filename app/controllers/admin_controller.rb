@@ -9,7 +9,8 @@ class AdminController < ApplicationController
     # Search functionality
     return unless params[:search]
 
-    @users = @users.where('first_name LIKE ? OR last_name LIKE ? OR email LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+    @users = @users.where('first_name LIKE ? OR last_name LIKE ? OR email LIKE ? OR username LIKE ?',
+                          "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
   end
 
   def show; end
@@ -89,8 +90,20 @@ class AdminController < ApplicationController
   end
 
   def user_params
-    # Set the default provider to google
     params[:user][:provider] ||= 'google_oauth2'
-    params.require(:user).permit(:first_name, :last_name, :email, :unit_id, :provider, :admin_flag)
+    # Admin-created Google users are preloaded and linked on first OAuth login.
+    if params[:user][:provider] == 'google_oauth2' && @user&.uid.blank?
+      params[:user][:provider] = 'preloaded_google'
+    end
+
+    permitted = params.require(:user).permit(
+      :first_name, :last_name, :email, :unit_id, :provider, :admin_flag,
+      :username, :password, :password_confirmation
+    )
+
+    permitted.except(:password, :password_confirmation).tap do |attrs|
+      attrs[:password] = permitted[:password] if permitted[:password].present?
+      attrs[:password_confirmation] = permitted[:password_confirmation] if permitted[:password_confirmation].present?
+    end
   end
 end

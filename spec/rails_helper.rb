@@ -10,6 +10,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'simplecov'
+require 'database_cleaner/active_record'
 SimpleCov.start 'rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
