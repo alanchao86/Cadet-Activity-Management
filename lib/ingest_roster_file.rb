@@ -75,7 +75,7 @@ class IngestRosterFile
       first_name: row['Cadet/First'],
       last_name: row['Cadet/Last'],
       uid: nil,
-      provider: 'google_oauth2',
+      provider: 'preloaded_google',
       admin_flag: false,
       major: row['Cadet/Major Unit'],
       minor: row['Cadet/Minor Unit'],

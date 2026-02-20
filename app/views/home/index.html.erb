@@ -12,8 +12,25 @@
                 <div class="mb-4 mb-sm-10">
                   <%= image_tag 'coc_logo.png', alt: 'Corps of Cadets Logo', class: 'img-fluid img-responsive', style: 'background-color: #500000 '%>                
                 </div>
+                <% if local_auth_enabled? %>
+                  <div class="mb-3">
+                    <%= form_with url: login_path, method: :post, local: true, data: { turbo: false } do %>
+                      <div class="mb-3">
+                        <%= label_tag :username, "Username", class: "form-label" %>
+                        <%= text_field_tag :username, nil, class: "form-control", required: true, autocomplete: "username" %>
+                      </div>
+                      <div class="mb-3">
+                        <%= label_tag :password, "Password", class: "form-label" %>
+                        <%= password_field_tag :password, nil, class: "form-control", required: true, autocomplete: "current-password" %>
+                      </div>
+                      <%= submit_tag "Login", class: "btn btn-primary btn-lg btn-block w-100 mb-3" %>
+                    <% end %>
+                    <p class="small text-muted">Demo credentials are documented in README.</p>
+                  </div>
+                <% end %>
+
                 <%= form_tag("/auth/google_oauth2", method: "post", data: { turbo: false }, class: "form-inline") do %>
-                  <%= button_tag(type: 'submit', class: "btn btn-dark btn-lg btn-block") do %>
+                  <%= button_tag(type: 'submit', class: "btn btn-dark btn-lg btn-block w-100") do %>
                     <i class="fab fa-google me-2"></i> Login with Google
                   <% end %>
                 <% end %>

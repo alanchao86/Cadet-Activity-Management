@@ -15,7 +15,7 @@ Given('I am a user with name {string}') do |name|
   User.find_or_create_by(email: 'dummy_minor_unit_staff@tamu.edu') do |minor_unit_staff|
     minor_unit_staff.first_name = 'Demo Minor',
                                   minor_unit_staff.last_name = 'Staff',
-                                  minor_unit_staff.provider = 'google_oauth2',
+                                  minor_unit_staff.provider = 'preloaded_google',
                                   minor_unit_staff.unit = minor,
                                   minor_unit_staff.minor = 'Demo Minor',
                                   minor_unit_staff.major = 'Demo Major',
@@ -26,7 +26,7 @@ Given('I am a user with name {string}') do |name|
   User.find_or_create_by(email: 'dummy_major_unit_staff@tamu.edu') do |major_unit_staff|
     major_unit_staff.first_name = 'Demo Major',
                                   major_unit_staff.last_name = 'Staff',
-                                  major_unit_staff.provider = 'google_oauth2',
+                                  major_unit_staff.provider = 'preloaded_google',
                                   major_unit_staff.unit = major,
                                   major_unit_staff.minor = nil,
                                   major_unit_staff.major = 'Demo Major',
@@ -37,7 +37,7 @@ Given('I am a user with name {string}') do |name|
   User.find_or_create_by(email: 'dummy_cmdt_staff@tamu.edu') do |cmdt_staff|
     cmdt_staff.first_name = 'Demo CMDT',
                             cmdt_staff.last_name = 'Staff',
-                            cmdt_staff.provider = 'google_oauth2',
+                            cmdt_staff.provider = 'preloaded_google',
                             cmdt_staff.unit = cmdt,
                             cmdt_staff.minor = nil,
                             cmdt_staff.major = nil,

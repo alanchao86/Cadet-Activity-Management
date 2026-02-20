@@ -18,10 +18,12 @@ module SessionHelper
   def check_preloaded_database(auth)
     u = User.find_by(email: auth.dig('info', 'email'))
     return unless u
-    raise 'email already associated with a uid??' if u.uid
+
+    return if u.local_auth?
+    raise 'email already associated with a uid??' if u.google_auth? && u.uid.present?
 
     u.uid = auth['uid']
-    u.provider = auth['provider']
+    u.provider = 'google_oauth2'
     u.save! if u.changed?
     u
   end

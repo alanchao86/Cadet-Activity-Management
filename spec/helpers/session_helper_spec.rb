@@ -40,7 +40,7 @@ RSpec.describe SessionHelper do
         first_name: 'Pre',
         last_name: 'Loaded',
         uid: nil,
-        provider: 'google_oauth2',
+        provider: 'preloaded_google',
         unit: unassigned_outfit,
         admin_flag: false
       )
